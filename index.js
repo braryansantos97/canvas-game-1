@@ -184,7 +184,8 @@ function animate() {
       if (distance - enemy.radius - projectile. radius < 1) {
         for (let i = 0; i < 8; i++) {
           particles.push(
-            new Particle(projectile.x, projectile.y, 3, 
+            new Particle(projectile.x, projectile.y, 
+              Math.random() * 2, 
               enemy.color, { 
                 x: Math.random() - 0.5, 
                 y: Math.random() - 0.5 
