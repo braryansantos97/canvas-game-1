@@ -4,6 +4,8 @@ const c = canvas.getContext('2d');
 canvas.width = innerWidth;
 canvas.height = innerHeight;
 
+const scoreEl = document.querySelector('#scoreEl');
+
 class Player {
   constructor(x, y, radius, color) {
     this.x = x
@@ -65,6 +67,7 @@ class Enemy {
   }
 }
 
+const friction = 0.99;
 class Particle {
   constructor(x, y, radius, color, velocity) {
     this.x = x
@@ -87,6 +90,8 @@ class Particle {
 
   update() {
     this.draw();
+    this.velocity.x *= friction
+    this.velocity.y *= friction
     this.x = this.x + this.velocity.x
     this.y = this.y + this.velocity.y
     this.alpha -= 0.01
@@ -134,6 +139,8 @@ function spawnEnemies() {
 }
 
 let animationId
+let score = 0;
+
 function animate() {
   animationId = requestAnimationFrame(animate);
   c.fillStyle = 'rgba(0, 0, 0, 0.1)'
@@ -182,18 +189,22 @@ function animate() {
 
       //enemy and projectile touch
       if (distance - enemy.radius - projectile. radius < 1) {
-        for (let i = 0; i < 8; i++) {
+        for (let i = 0; i < enemy.radius * 2; i++) {
           particles.push(
             new Particle(projectile.x, projectile.y, 
               Math.random() * 2, 
               enemy.color, { 
-                x: Math.random() - 0.5, 
-                y: Math.random() - 0.5 
+                x: (Math.random() - 0.5) * (Math.random() * 6), 
+                y: (Math.random() - 0.5) * (Math.random() * 6)
               }
             )
           )
         }
-        if (enemy.radius - 10 > 6) {
+        if (enemy.radius - 10 > 5) {
+          //increase our score
+          score += 100
+          scoreEl.innerHTML = score
+
           gsap.to(enemy, {
             radius: enemy.radius - 10
           })
@@ -201,6 +212,10 @@ function animate() {
             projectiles.splice(projectileIndex, 1)    
           }, 0)
         } else {
+          //eliminate emeny
+          score += 250
+          scoreEl.innerHTML = score
+          
           setTimeout(() => {
             enemies.splice(index, 1)
             projectiles.splice(projectileIndex, 1)    

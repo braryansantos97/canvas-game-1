@@ -3,6 +3,7 @@
   <head>
     <meta charset="utf-8">
     <title></title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
       body {
         margin: 0;
@@ -10,8 +11,13 @@
     </style>
   </head>
   <body>
-    <canvas></canvas>
 
+    <div class="fixed text-white text-sm ml-2 mt-1 select-none">
+      <span>Score: </span>
+      <span id="scoreEl">0</span>
+    </div>
+
+    <canvas></canvas>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.10.3/gsap.min.js" integrity="sha512-6zTDRWNxo8vI6JZYDCwhrJpg5icK3P4HNnW3czsO5Scb3lAoPDam+/wF3eog4hxcl0h44d0XlIcFkuoSaWHQ2g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="./index.js"></script>
   </body>
